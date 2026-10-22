@@ -24,7 +24,9 @@ Pick the session whose first user message matches this conversation's opening pr
 
 One message, three `subagent` calls. Each brief states that the reviewer may read freely and must not edit skill files, since skill edits land only after approval in step 5.
 
-Each reviewer and the synthesizer take their routes from the `reflect_lenses` and `reflect_synthesizer` roles in `config/models.yml` of this repo (or `~/.dsh/pstack-models.yml`). Pass each role's `provider`, `model`, and `reasoning_effort`. Omit `model` for a seat that has none, so it inherits the parent's. If the host rejects a route, use the file's `fallback` and say so. Pick each child's reasoning effort for the job, per the Subagents section of the **poteto-mode** skill.
+Each reviewer and the synthesizer take their routes from the `reflect_lenses` and `reflect_synthesizer` roles. The three lenses already differ in prompt, so model diversity is a bonus rather than the mechanism. Per the shared rule below.
+
+**Child model selection may be unavailable.** Before the first spawn in a session, glance at the `subagent` tool's own schema. When it declares `provider`, `model`, and `reasoning_effort`, pass the role's route from `config/models.yml` of this repo (or the user's `~/.dsh/pstack-models.yml`). When it declares only `prompt`, `description`, and `cwd`, every child runs on the parent's route: omit the route entirely, and get the diversity this step needs from the briefs instead. Never pass a field the schema does not declare.
 
 | Lens | Seat | Prompt template (relative to this file) |
 |---|---|---|

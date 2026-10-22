@@ -54,7 +54,19 @@ The 13 task skills (poteto-mode, the six routines, and the writing and review pa
 
 ## Model roles
 
-`config/models.yml` names a route per role. The shipped defaults are:
+**This only works when child model selection is on.** In the default configuration the `subagent` tool declares just `prompt`, `description`, and `cwd`, so every child runs on the parent's route and the roles below stay inert. The skills detect this from the tool's own schema and fall back to getting diversity from the briefs.
+
+To turn it on, add this to the profile patch and pick the allowed routes on the Host's Subagent settings page:
+
+```yaml
+- id: tool-subagent
+  config:
+    provider: spawn
+    toolName: subagent
+    modelSelectionSettings: true
+```
+
+With it on, `config/models.yml` names a route per role. The shipped defaults are:
 
 | Role | Route | Effort |
 |---|---|---|
@@ -66,7 +78,7 @@ The 13 task skills (poteto-mode, the six routines, and the writing and review pa
 
 To override a role without editing the repo, write `~/.dsh/pstack-models.yml` with the same shape and only the roles you want to change. It wins over this file.
 
-Check what the host actually advertises before trusting a route. Call `list_subagent_models` with no arguments to list providers, then with a provider id for its models and efforts. The Subagent settings page also gates which routes a child may select at all.
+Check what the host actually advertises before trusting a route. Call `list_subagent_models` with no arguments to list providers, then with a provider id for its models and efforts. The settings page gates which routes a child may select at all, so a role naming a route that is not checked there fails even with the flag on.
 
 ## Keeping up with upstream
 

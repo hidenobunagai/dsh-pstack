@@ -13,7 +13,9 @@ Every candidate gets the same prompt, so the prompt is the contract.
 
 1. State the artifact each candidate is producing.
 2. Derive the rubric, 3-6 concrete gradeable criteria for what success looks like on *this* task. It is the picker's tool in Phase D. Candidates only see the task.
-3. Pick the runners from the `arena` role in `config/models.yml` of this repo (or `~/.dsh/pstack-models.yml`), one call per seat. If the role is missing, use the file's `fallback` twice and say so. A seat with no `model` means the parent model, so omit `model` for it. If the host rejects a configured route, run that seat on the fallback and say so. If it rejects the fallback, call `list_subagent_models` and use the closest valid route of the same family. Spawn more runners when the arena covers multiple design directions. Use the same route N times when the work is generation-bound rather than judgment-sensitive. Pick each seat's reasoning effort for the job, per the Subagents section of the **poteto-mode** skill.
+3. Pick the runners from the `arena` role, one call per seat. Spawn more runners when the arena covers multiple design directions. Use the same route N times when the work is generation-bound rather than judgment-sensitive. Per the shared rule below.
+
+**Child model selection may be unavailable.** Before the first spawn in a session, glance at the `subagent` tool's own schema. When it declares `provider`, `model`, and `reasoning_effort`, pass the role's route from `config/models.yml` of this repo (or the user's `~/.dsh/pstack-models.yml`). When it declares only `prompt`, `description`, and `cwd`, every child runs on the parent's route: omit the route entirely, and get the diversity this step needs from the briefs instead. Never pass a field the schema does not declare.
 4. Give each candidate its own output location. Use `jj workspace add` when the candidate writes into a repo, otherwise `/tmp/arena-<slug>/candidate-<n>/`, per the **separate-before-serializing-shared-state** principle skill.
 
 ## Phase B: Fan out

@@ -18,7 +18,9 @@ Open a todolist with one entry per phase before launching anything.
 
 1. State the done predicate and the artifact or report the swarm must return.
 2. Choose the shape. Partition into slices, race N workers on identical briefs, or mix both. For a race or mixed shape, declare `first pass`, `rank all`, or `best-of` before spawning.
-3. Pick the worker model from the `swarm_workers` role in `config/models.yml` of this repo, or its per-user override at `~/.dsh/pstack-models.yml`. If the role is missing, use the file's `fallback`. Pass the role's `provider`, `model`, and `reasoning_effort` to every `subagent` call. When the role sets no model, omit `model` so the worker runs on the parent model. If the host rejects a route, use the fallback and say so in the report. If it rejects the fallback, call `list_subagent_models` and use the closest valid route of the same family. For a model race, name each arm's route up front. Pick each worker's reasoning effort for the job, per the Subagents section of the **poteto-mode** skill.
+3. Pick the worker model from the `swarm_workers` role. For a model race, name each arm's route up front. Per the shared rule below.
+
+**Child model selection may be unavailable.** Before the first spawn in a session, glance at the `subagent` tool's own schema. When it declares `provider`, `model`, and `reasoning_effort`, pass the role's route from `config/models.yml` of this repo (or the user's `~/.dsh/pstack-models.yml`). When it declares only `prompt`, `description`, and `cwd`, every child runs on the parent's route: omit the route entirely, and get the diversity this step needs from the briefs instead. Never pass a field the schema does not declare.
 4. Give each worker its own writable output when it writes. When workers verify or measure commits, each brief names the exact revisions. A measurement brief also names the method (sample count, what one sample is, order). The worker records both in its result.
 
 ## Phase B: Fan out

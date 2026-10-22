@@ -27,7 +27,9 @@ Skip Phase A only when the work is genuinely greenfield with no surrounding syst
 
 Run the **arena** skill with the design-sketch task and the Phase A grounding artifacts. Pass `references/runner-prompt.md` as each runner's prompt.
 
-Take the runners from the `architect` role in `config/models.yml` of this repo (or `~/.dsh/pstack-models.yml`), in place of the `arena` role. Each role seat becomes one runner. If the role is missing, use the file's `fallback` for both runners and say so. Rejected entries follow the runner rules in the **arena** skill's Phase A.
+Take the runners from the `architect` role, one runner per seat. When child model selection is unavailable, run both candidates on the parent route and separate them by design direction instead, per the shared rule below.
+
+**Child model selection may be unavailable.** Before the first spawn in a session, glance at the `subagent` tool's own schema. When it declares `provider`, `model`, and `reasoning_effort`, pass the role's route from `config/models.yml` of this repo (or the user's `~/.dsh/pstack-models.yml`). When it declares only `prompt`, `description`, and `cwd`, every child runs on the parent's route: omit the route entirely, and get the diversity this step needs from the briefs instead. Never pass a field the schema does not declare.
 
 Design it twice. Require at least two structurally distinct candidates before synthesis, even when the first looks sufficient. This is the **exhaust-the-design-space** principle skill made concrete. Whole-shape alternatives, not point fixes inside one shape.
 

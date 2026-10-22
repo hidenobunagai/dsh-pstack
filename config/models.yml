@@ -9,8 +9,14 @@
 #   2. this file                     shipped defaults
 #   3. fallback at the bottom        when a role is absent from both files
 #
-# The host's Subagent settings page decides which routes a child may select at all. A role
-# naming a route outside that allowlist fails until the route is enabled there.
+# These roles only apply when the session exposes child model selection, meaning the `subagent`
+# tool's own schema declares `provider`, `model`, and `reasoning_effort`. When that schema lists
+# only `prompt`, `description`, and `cwd`, every child runs on the parent's route and these roles
+# are inert. Each skill says so in its own brief.
+#
+# Enabling it takes two things together: a `tool-subagent` row with `modelSelectionSettings: true`,
+# and the Host's Subagent settings page choosing which routes a child may select. A route outside
+# that allowlist fails even with the flag on.
 #
 # Verify a route before relying on it. Call `list_subagent_models` with no arguments to list
 # providers, then with a provider id to list its models and their efforts.

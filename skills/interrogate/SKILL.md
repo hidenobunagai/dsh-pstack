@@ -23,11 +23,13 @@ Before spawning reviewers, state the intent in one clear paragraph from the user
 
 ## Step 3, Spawn Reviewers
 
-Launch all reviewers in a single message, one `subagent` call per seat on the `interrogate_reviewers` role in `config/models.yml` of this repo (or `~/.dsh/pstack-models.yml`), labeled Reviewer A, B, and so on to match the seat count. If the role is missing, use the file's `fallback` for each reviewer and say so.
+Launch all reviewers in a single message, one `subagent` call per seat on the `interrogate_reviewers` role, labeled Reviewer A, B, and so on to match the seat count.
 
-Each reviewer's brief states that the review is read-only and that no file may be edited. There is no read-only flag on the tool, so the brief carries that constraint. Omit `model` for a seat that has none, so that reviewer runs on the parent model.
+Each reviewer's brief states that the review is read-only and that no file may be edited. There is no read-only flag on the tool, so the brief carries that constraint.
 
-If the host rejects a configured route, run that reviewer on the fallback and say so. If it rejects the fallback, call `list_subagent_models` and use the closest equivalent from the advertised routes, preferring the same family and reasoning tier. Do not block the review on a route issue.
+Model diversity is this skill's whole signal. When the session cannot select child models, every reviewer shares the parent route, so assign each reviewer a different lens instead. Give one the correctness and failure modes, one the design and structure, one the tests and what they fail to cover. Read `references/rubric.md` and split it rather than handing every reviewer the whole thing. Per the shared rule below.
+
+**Child model selection may be unavailable.** Before the first spawn in a session, glance at the `subagent` tool's own schema. When it declares `provider`, `model`, and `reasoning_effort`, pass the role's route from `config/models.yml` of this repo (or the user's `~/.dsh/pstack-models.yml`). When it declares only `prompt`, `description`, and `cwd`, every child runs on the parent's route: omit the route entirely, and get the diversity this step needs from the briefs instead. Never pass a field the schema does not declare.
 
 Read `references/reviewer-prompt.md` and fill in the same template for every reviewer with the stated intent, the diff or file contents, the rubric from `references/rubric.md`, and the code-quality lens from `references/code-quality-review.md`. Pick each reviewer's reasoning effort for the job, per the Subagents section of the **poteto-mode** skill.
 

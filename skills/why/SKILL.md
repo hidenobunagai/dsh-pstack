@@ -7,7 +7,9 @@ description: "Use for 'why does X work this way', 'why we picked Y', design rati
 
 Investigate the motivation and intent behind code. The companion `how` skill answers what the code does and how it works. `why` answers what forces led to its shape.
 
-Each spawn below names a role in `config/models.yml` of this repo, or the per-user override at `~/.dsh/pstack-models.yml`. Pass the role's `provider`, `model`, and `reasoning_effort` to the `subagent` call. Leave `model` unset when a role has none, so the child inherits the parent's. If the host rejects a route, use the file's `fallback` and say so. If it rejects the fallback, call `list_subagent_models` and use the closest valid route of the same family. Pick each child's reasoning effort for the job, per the Subagents section of the **poteto-mode** skill.
+Each spawn below names a role, per the shared rule below.
+
+**Child model selection may be unavailable.** Before the first spawn in a session, glance at the `subagent` tool's own schema. When it declares `provider`, `model`, and `reasoning_effort`, pass the role's route from `config/models.yml` of this repo (or the user's `~/.dsh/pstack-models.yml`). When it declares only `prompt`, `description`, and `cwd`, every child runs on the parent's route: omit the route entirely, and get the diversity this step needs from the briefs instead. Never pass a field the schema does not declare.
 
 Every spawn is an ordinary `subagent` call. There is no read-only mode to avoid, and MCP tools stay reachable from the child, so the MCP-backed investigators and the synthesizer's citation spot-checks both work. Each brief states that nothing may be written.
 
