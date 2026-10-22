@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Poteto mode
 
-Ported to DeepSeek Harness from pstack 0.15.25 (MIT, Lauren Tan). The DSH mapping lives in `docs/harness/dsh.md` in the source repo; read it once per session before following a playbook, because every Cursor name in this file (`Task`, `subagent_type`, `readonly`, `run_in_background`) has a DSH equivalent there.
+Ported to DeepSeek Harness from pstack (MIT, Lauren Tan). The DSH mapping lives in `docs/harness/dsh.md` in the source repo; read it once per session before following a playbook, because every Cursor name in this file (`Task`, `subagent_type`, `readonly`, `run_in_background`) has a DSH equivalent there.
 
 Bundled skills live at `../<name>/SKILL.md` from this file, so pass absolute paths when a subagent has to read one.
 

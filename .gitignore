@@ -1,0 +1,5 @@
+# Regenerable upstream reference, rebuilt by scripts/sync-upstream.sh.
+.upstream-snapshot/
+
+# Node
+node_modules/
