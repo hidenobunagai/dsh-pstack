@@ -7,7 +7,7 @@ description: "Fan out N parallel workers, drain them, and return one report. Use
 
 ## Start
 
-Open a todolist with one entry per phase before launching anything.
+Open a `todo_write` list with one entry per phase before launching anything.
 
 1. Frame
 2. Fan out

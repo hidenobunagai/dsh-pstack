@@ -11,7 +11,7 @@ Every spawn is a `subagent` call. It has no `subagent_type`, so the role is the 
 
 **Child model selection may be unavailable.** Before the first spawn in a session, glance at the `subagent` tool's own schema. When it declares `provider`, `model`, and `reasoning_effort`, pass the role's route from `config/models.yml` of this repo (or the user's `~/.dsh/pstack-models.yml`). When it declares only `prompt`, `description`, and `cwd`, every child runs on the parent's route: omit the route entirely, and get the diversity this step needs from the briefs instead. Never pass a field the schema does not declare.
 
-Reference prompt templates live beside this file, at absolute paths under this skill folder. Read the template with the `read_file` tool and paste its text into the brief. A child cannot resolve a relative path against this file.
+Reference prompt templates live beside this file, at absolute paths under this skill folder. Read the template with the `read` tool and paste its text into the brief. A child cannot resolve a relative path against this file.
 
 - `references/explorer-prompt.md`
 - `references/explainer-prompt.md`
