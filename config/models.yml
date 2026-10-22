@@ -1,0 +1,134 @@
+# pstack model roles for DSH.
+#
+# A role entry names a provider, a model, and an optional reasoning effort. The subagent call
+# receives them as `provider`, `model`, and `reasoning_effort`. A role with a list holds several
+# seats, for the skills that compare independent runs.
+#
+# Resolution order, first match wins:
+#   1. ~/.dsh/pstack-models.yml      per-user override, not committed
+#   2. this file                     shipped defaults
+#   3. fallback at the bottom        when a role is absent from both files
+#
+# The host's Subagent settings page decides which routes a child may select at all. A role
+# naming a route outside that allowlist fails until the route is enabled there.
+#
+# Verify a route before relying on it. Call `list_subagent_models` with no arguments to list
+# providers, then with a provider id to list its models and their efforts.
+
+roles:
+  # Implementation. Raise effort for the hardest changes, lower it for mechanical edits.
+  code:
+    provider: commandcode-goat
+    model: deepseek/deepseek-v4.1-flash
+    effort: max
+    why: Cheap and strong enough for the bulk of implementation work. Max effort because the
+      delegate owns a whole diff and the cost of a wrong shape exceeds the token saving.
+
+  # Prose, PR bodies, and any writing the operator reads.
+  prose:
+    provider: commandcode-goat
+    model: xiaomi/mimo-v2.6-pro
+    effort: high
+    why: Strong writing per unit cost. Judgment-call work reads well here without the price of a
+      premium reasoning model.
+
+  # Judgment calls: vague intent, contested design, final verdicts.
+  judgment:
+    provider: commandcode-goat
+    model: xiaomi/mimo-v2.6-pro
+    effort: high
+    why: The seat that decides when the requirement is underspecified. Swap in a stronger route
+      here first when quality matters more than cost.
+
+  # Codebase exploration for the how skill. Volume matters more than depth.
+  explorer:
+    provider: commandcode-goat
+    model: deepseek/deepseek-v4.1-flash
+    effort: high
+
+  # The explainer that turns explorer findings into an architectural write-up.
+  explainer:
+    provider: commandcode-goat
+    model: xiaomi/mimo-v2.6-pro
+    effort: high
+
+  # Architectural sketches for the architect skill.
+  architect:
+    provider: commandcode-goat
+    model: xiaomi/mimo-v2.6-pro
+    effort: high
+    why: Design work where two structurally distinct candidates get compared.
+
+  # Arena runners. Two seats from different families, so the arena cannot collapse onto one
+  # house style.
+  arena:
+    - provider: commandcode-goat
+      model: xiaomi/mimo-v2.6-pro
+      effort: high
+    - provider: commandcode-goat
+      model: xai/grok-4.7
+      effort: high
+
+  # Cross-judge for the arena. Prefer a family other than the parent's.
+  arena_judge:
+    provider: commandcode-goat
+    model: xai/grok-4.7
+    effort: high
+
+  # Swarm workers: many parallel lanes, narrow scope each.
+  swarm_workers:
+    provider: commandcode-goat
+    model: deepseek/deepseek-v4.1-flash
+    effort: high
+
+  # Adversarial reviewers, one seat per model. Diversity is the point.
+  interrogate_reviewers:
+    - provider: commandcode-goat
+      model: xiaomi/mimo-v2.6-pro
+      effort: high
+    - provider: commandcode-goat
+      model: xai/grok-4.7
+      effort: high
+    - provider: commandcode-goat
+      model: deepseek/deepseek-v4.1-flash
+      effort: max
+
+  # The lead that merges interrogate findings.
+  interrogate_lead:
+    provider: commandcode-goat
+    model: xiaomi/mimo-v2.6-pro
+    effort: high
+
+  # Reflect: three lenses plus a synthesizer.
+  reflect_lenses:
+    - provider: commandcode-goat
+      model: xiaomi/mimo-v2.6-pro
+      effort: high
+    - provider: commandcode-goat
+      model: xai/grok-4.7
+      effort: high
+    - provider: commandcode-goat
+      model: deepseek/deepseek-v4.1-flash
+      effort: max
+
+  reflect_synthesizer:
+    provider: commandcode-goat
+    model: xiaomi/mimo-v2.6-pro
+    effort: high
+
+  # Historical research for the why skill.
+  why_investigator:
+    provider: commandcode-goat
+    model: deepseek/deepseek-v4.1-flash
+    effort: high
+
+  why_synthesizer:
+    provider: commandcode-goat
+    model: xiaomi/mimo-v2.6-pro
+    effort: high
+
+# Used when a role is absent from both files above.
+fallback:
+  provider: commandcode-goat
+  model: deepseek/deepseek-v4.1-flash
+  effort: high
