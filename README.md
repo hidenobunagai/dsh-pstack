@@ -46,6 +46,12 @@ Type `/poteto-mode` or say "poteto" to enter the working style. From there the p
 
 The supporting skills are user-invocable in their own right: `how`, `why`, `architect`, `arena`, `swarm`, `interrogate`, `reflect`, `unslop`, `no-comments`, `technical-writing`, `show-me-your-work`, `benchmark-checklist`.
 
+## Catalog visibility
+
+The 21 `principle-*` skills keep `disable-model-invocation: true`, as upstream has them. They stay out of the model's skill catalog so every request does not pay for 21 descriptions, and the model reads the leaf file when a trigger names one.
+
+The 13 task skills (poteto-mode, the six routines, and the writing and review passes) drop that flag, so the model can also route to them on its own when a task matches. Upstream relies on the user typing the command. On this host the model finding `bug-fix` by itself is worth 13 catalog entries.
+
 ## Model roles
 
 `config/models.yml` names a route per role. The shipped defaults are:

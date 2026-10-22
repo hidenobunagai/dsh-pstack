@@ -69,6 +69,6 @@ Never run a git write command. Read-only `git` and `gh` are fine, and `gh` stays
 |---|---|
 | `.cursor/rules` always-applied rule | `AGENTS.md`, or a `customSkillDirs` entry that is read on demand |
 | skill `icon` / `color` fields | dropped |
-| `disable-model-invocation: true` | keep it. It hides the skill from the model catalog and keeps user invocation. |
+| `disable-model-invocation: true` | keep it for the `principle-*` skills. It keeps them out of the model catalog so every request does not pay for 21 descriptions, and the model reads the leaf file directly. The user-facing task skills drop it, so the model can also route to them on its own. |
 | relative reference to a sibling skill | an absolute path, because a subagent's working directory may differ |
 | `references/*.md` | the same relative path from the skill folder |
