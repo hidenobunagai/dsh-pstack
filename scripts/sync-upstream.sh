@@ -59,7 +59,7 @@ if [ "$check" = 1 ]; then
     while IFS= read -r line; do
       echo "  $line"
       changed=$((changed + 1))
-    done < <(diff -rq "$snapshot" "$fresh" 2>/dev/null | grep -v '^Only in .*agents' || true)
+    done < <(diff -rq "$snapshot" "$fresh" 2>/dev/null | grep -v -e '^Only in .*agents' -e 'UPSTREAM.txt' || true)
   else
     echo "  no snapshot yet; run without --check to create one"
     changed=1
