@@ -14,9 +14,11 @@
 # only `prompt`, `description`, and `cwd`, every child runs on the parent's route and these roles
 # are inert. Each skill says so in its own brief.
 #
-# Enabling it takes two things together: a `tool-subagent` row with `modelSelectionSettings: true`,
-# and the Host's Subagent settings page choosing which routes a child may select. A route outside
-# that allowlist fails even with the flag on.
+# Enabling it takes a `subagent-model-selection-settings` row with `enabled: true` and an
+# `allowedModels` list in ~/.dsh/cordis.patch.yml. The standard preset already sets
+# `modelSelectionSettings: true` on its tool-subagent row. Two constraints from the implementation:
+# the policy is sampled when a session is composed, so it applies to new sessions only; and the row
+# lives in the dsh-web-app bundle, so the headless profile never mounts it.
 #
 # Verify a route before relying on it. Call `list_subagent_models` with no arguments to list
 # providers, then with a provider id to list its models and their efforts.

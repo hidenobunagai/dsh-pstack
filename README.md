@@ -56,15 +56,25 @@ The 13 task skills (poteto-mode, the six routines, and the writing and review pa
 
 **This only works when child model selection is on.** In the default configuration the `subagent` tool declares just `prompt`, `description`, and `cwd`, so every child runs on the parent's route and the roles below stay inert. The skills detect this from the tool's own schema and fall back to getting diversity from the briefs.
 
-To turn it on, add this to the profile patch and pick the allowed routes on the Host's Subagent settings page:
+To turn it on, add this to `~/.dsh/cordis.patch.yml`:
 
 ```yaml
-- id: tool-subagent
+- id: subagent-model-selection-settings
   config:
-    provider: spawn
-    toolName: subagent
-    modelSelectionSettings: true
+    enabled: true
+    allowedModels:
+      - provider: commandcode-goat
+        model: deepseek/deepseek-v4.1-flash
+      - provider: commandcode-goat
+        model: xiaomi/mimo-v2.6-pro
+      - provider: commandcode-goat
+        model: xai/grok-4.7
 ```
+
+The standard preset already sets `modelSelectionSettings: true` on its `tool-subagent` row, so the policy above is the only missing half. Two constraints, both read from the implementation:
+
+- The policy is sampled when a session is composed, so it applies to **new sessions only**. A session already open keeps the schema it started with.
+- The row lives in the `dsh-web-app` bundle. The `headless` profile does not mount it, so headless runs always use the parent route.
 
 With it on, `config/models.yml` names a route per role. The shipped defaults are:
 
