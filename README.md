@@ -11,7 +11,7 @@ The skills keep their behavior. These parts change:
 - **Delegation.** Cursor's `Task` tool becomes DSH's `subagent`. There is no `subagent_type`, so a role is the brief you write, and a role's model is the `provider` / `model` / `reasoning_effort` arguments on the call.
 - **Models.** Cursor reads role models from `~/.cursor/rules/pstack-models.mdc`. This port reads `config/models.yml`, with a per-user override at `~/.dsh/pstack-models.yml`.
 - **Version control.** Every repo here is a colocated jj repo, so `git worktree` becomes `jj workspace add`, and stacking uses `jj rebase` / `jj squash`.
-- **Always-on poteto-mode.** A SessionStart hook (`hooks/poteto-always.sh`) injects `skills/poteto-mode/SKILL.md` into every session, the way Cursor pins a custom mode. Say "poteto-mode off" to drop it for a session. `PSTACK_POTETO=off` in the environment skips it, which the headless jobs set.
+- **Always-on poteto-mode.** A SessionStart hook (`hooks/poteto-always.sh`) injects `skills/poteto-mode/SKILL.md` into every session, the way Cursor pins a custom mode. Say "poteto-mode off" to drop it for a session. It stays on in headless runs too, including the scheduled jobs. `PSTACK_POTETO=off` in the environment is kept as an escape hatch that skips it.
 - **Verification surfaces.** `control-ui` and `control-cli` from `cursor-team-kit` become `web-verify` for web UIs and a direct run of the real binary for CLIs.
 - **Commands.** `/deslop` and `/no-comments` fold into skill passes. `/loop 1h` becomes `schedule_create`.
 

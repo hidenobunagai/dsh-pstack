@@ -1,5 +1,5 @@
 #!/bin/sh
-# Pin poteto-mode on for every session, like Cursor's custom mode. PSTACK_POTETO=off skips it (headless jobs set it).
+# Pin poteto-mode on for every session, like Cursor's custom mode. On in headless runs too; PSTACK_POTETO=off is an escape hatch that skips it.
 # DSH's hooks-claude-code takes context only from JSON hookSpecificOutput.additionalContext.
 [ "$PSTACK_POTETO" = off ] && exit 0
 skill=$(realpath "$(dirname "$0")/../skills/poteto-mode/SKILL.md")
