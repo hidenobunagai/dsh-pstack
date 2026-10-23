@@ -82,10 +82,12 @@ With it on, `config/models.yml` names a route per role. The shipped defaults are
 |---|---|---|
 | `code` | `deepseek/deepseek-v4.1-flash` | max |
 | `prose`, `judgment` | `xiaomi/mimo-v2.6-pro` | high |
-| `arena` (2 seats) | mimo-v2.6-pro, glm-5.3-flash | high, max |
+| `arena` (2 seats) | mimo-v2.6-pro, glm-5.3-flash | high, high |
 | `arena_judge` | deepseek-v4.1-flash | max |
 | `interrogate_reviewers` (3 seats) | mimo-v2.6-pro, glm-5.3-flash, deepseek-v4.1-flash | high, max, max |
 | `swarm_workers` | `deepseek/deepseek-v4.1-flash` | high |
+
+Effort is set to each model's ceiling rather than one value across the board. MiMo V2.6 Pro stops at `high`, so an arena seat on MiMo cannot go deeper; the GLM seat is held at `high` as well so the two candidates are compared at the same depth. The review seats keep `max` on the models that accept it, because a review is a single diff read rather than a long loop.
 
 Why these and not a premium reasoning model: `subagent` calls run an agent loop, so input volume dominates and a $2/$6 route costs roughly ten times a $0.15/$0.5 one. `z-ai/glm-5.3-flash` carries the highest measured intelligence of the cheap tier (57.5) and a different training lineage from MiMo and DeepSeek, which is the property the arena and the adversarial reviewers actually need. Diversity comes from the family, not the price tag.
 

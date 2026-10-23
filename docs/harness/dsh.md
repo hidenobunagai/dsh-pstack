@@ -27,6 +27,18 @@ Families in the upstream fallback rules map by prefix: a `claude-*` entry needs 
 
 The user's subagent settings page governs which routes a child may select at all. A route outside that allowlist fails no matter what the role file says.
 
+## Effort
+
+`reasoning_effort` is a per-model enum, and a value above the model's ceiling is clamped down rather than rejected. The ceiling differs by family, so a panel that mixes families has to normalize:
+
+| Model | Efforts |
+|---|---|
+| `deepseek/deepseek-v4.1-flash` | low, high, max |
+| `z-ai/glm-5.3-flash` | low, high, max |
+| `xiaomi/mimo-v2.6-pro` | low, medium, high |
+
+The parent turn's effort is owned by the `dsh-jev` router, which judges each user prompt and applies a per-model lift. For `deepseek/deepseek-v4.1-flash` every judgment from `medium` up lands on `max`. A skill should not fight it. Child effort is set by the role table instead, and the router does not decide that.
+
 ## Control skills
 
 Cursor's `control-ui` and `control-cli` from `cursor-team-kit` are not available. Map by surface:

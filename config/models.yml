@@ -68,15 +68,15 @@ roles:
     why: Design work where two structurally distinct candidates get compared.
 
   # Arena runners. Two seats from different families, so the arena cannot collapse onto one
-  # house style. GLM carries the highest measured intelligence at flash pricing, which makes it
-  # the cheapest way to get a genuinely different family in the room.
+  # house style. Both run at `high`, the highest effort MiMo accepts, so neither seat starts
+  # deeper than the other and the comparison stays about the design rather than the budget.
   arena:
     - provider: commandcode-goat
       model: xiaomi/mimo-v2.6-pro
       effort: high
     - provider: commandcode-goat
       model: z-ai/glm-5.3-flash
-      effort: max
+      effort: high
 
   # Cross-judge for the arena. A family neither runner used, so it cannot endorse its own work.
   arena_judge:
@@ -91,7 +91,9 @@ roles:
     effort: high
 
   # Adversarial reviewers, one seat per model. Diversity is the point, and price per seat barely
-  # matters here: a review reads a diff, it does not run an agent loop.
+  # matters here: a review reads a diff, it does not run an agent loop. Seats run at `high` where
+  # that is the model's ceiling, and at `max` where the model accepts it, so each seat gives its
+  # best without one being graded on a shallower setting than another.
   interrogate_reviewers:
     - provider: commandcode-goat
       model: xiaomi/mimo-v2.6-pro
@@ -110,6 +112,7 @@ roles:
     effort: high
 
   # Reflect: three lenses plus a synthesizer.
+  # Same ceiling rule as the reviewers above.
   reflect_lenses:
     - provider: commandcode-goat
       model: xiaomi/mimo-v2.6-pro

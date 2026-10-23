@@ -94,6 +94,10 @@ On this host, every subagent is the `subagent` tool. There is no `subagent_type`
 
 **Match the model to the job.** Before each spawn, start from the role's line and pick the reasoning effort the job needs. Raise it toward `max` for the hardest or subtlest work. Lower it for routine work. If a requested route is rejected, use the role's default and say so in the reply. When child model selection is unavailable, all children share the parent route, so a diverse panel has to come from the prompts.
 
+**Effort has a ceiling per model.** A request above what the model accepts is clamped down, not rejected, so check the route's supported efforts before choosing. `deepseek/deepseek-v4.1-flash` and `z-ai/glm-5.3-flash` take `low` / `high` / `max`, while `xiaomi/mimo-v2.6-pro` stops at `high`. Two seats compared at different depths give you a comparison of budgets rather than of work, so hold the shallower seat's ceiling as the common depth when the whole panel is the point.
+
+**The parent's own effort is not yours to set here.** The Jev router judges each user turn and lifts it, with `deepseek/deepseek-v4.1-flash` mapping anything from `medium` up to `max`. Leave that alone. Do not re-state an effort on the parent, and do not treat a lowered parent effort as a reason to lower the children.
+
 List every spawn you plan before you start them, and issue them in one message so they run concurrently.
 
 `subagent` children cannot ask you questions and cannot spawn their own children beyond the host's depth limit, so a brief has to be self-contained. You own every subagent's work. Review the diff and write your own summary, don't pass through what it said. A second opinion is the same prompt with a different brief, or against a different model when the session allows it. Agreement is high-signal.
