@@ -68,20 +68,21 @@ roles:
     why: Design work where two structurally distinct candidates get compared.
 
   # Arena runners. Two seats from different families, so the arena cannot collapse onto one
-  # house style.
+  # house style. GLM carries the highest measured intelligence at flash pricing, which makes it
+  # the cheapest way to get a genuinely different family in the room.
   arena:
     - provider: commandcode-goat
       model: xiaomi/mimo-v2.6-pro
       effort: high
     - provider: commandcode-goat
-      model: xai/grok-4.7
-      effort: high
+      model: z-ai/glm-5.3-flash
+      effort: max
 
-  # Cross-judge for the arena. Prefer a family other than the parent's.
+  # Cross-judge for the arena. A family neither runner used, so it cannot endorse its own work.
   arena_judge:
     provider: commandcode-goat
-    model: xai/grok-4.7
-    effort: high
+    model: deepseek/deepseek-v4.1-flash
+    effort: max
 
   # Swarm workers: many parallel lanes, narrow scope each.
   swarm_workers:
@@ -89,14 +90,15 @@ roles:
     model: deepseek/deepseek-v4.1-flash
     effort: high
 
-  # Adversarial reviewers, one seat per model. Diversity is the point.
+  # Adversarial reviewers, one seat per model. Diversity is the point, and price per seat barely
+  # matters here: a review reads a diff, it does not run an agent loop.
   interrogate_reviewers:
     - provider: commandcode-goat
       model: xiaomi/mimo-v2.6-pro
       effort: high
     - provider: commandcode-goat
-      model: xai/grok-4.7
-      effort: high
+      model: z-ai/glm-5.3-flash
+      effort: max
     - provider: commandcode-goat
       model: deepseek/deepseek-v4.1-flash
       effort: max
@@ -113,8 +115,8 @@ roles:
       model: xiaomi/mimo-v2.6-pro
       effort: high
     - provider: commandcode-goat
-      model: xai/grok-4.7
-      effort: high
+      model: z-ai/glm-5.3-flash
+      effort: max
     - provider: commandcode-goat
       model: deepseek/deepseek-v4.1-flash
       effort: max

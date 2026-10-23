@@ -68,7 +68,7 @@ To turn it on, add this to `~/.dsh/cordis.patch.yml`:
       - provider: commandcode-goat
         model: xiaomi/mimo-v2.6-pro
       - provider: commandcode-goat
-        model: xai/grok-4.7
+        model: z-ai/glm-5.3-flash
 ```
 
 The standard preset already sets `modelSelectionSettings: true` on its `tool-subagent` row, so the policy above is the only missing half. Two constraints, both read from the implementation:
@@ -82,9 +82,14 @@ With it on, `config/models.yml` names a route per role. The shipped defaults are
 |---|---|---|
 | `code` | `deepseek/deepseek-v4.1-flash` | max |
 | `prose`, `judgment` | `xiaomi/mimo-v2.6-pro` | high |
-| `arena` (2 seats) | mimo-v2.6-pro, grok-4.7 | high |
-| `interrogate_reviewers` (3 seats) | mimo-v2.6-pro, grok-4.7, deepseek-v4.1-flash | high, high, max |
+| `arena` (2 seats) | mimo-v2.6-pro, glm-5.3-flash | high, max |
+| `arena_judge` | deepseek-v4.1-flash | max |
+| `interrogate_reviewers` (3 seats) | mimo-v2.6-pro, glm-5.3-flash, deepseek-v4.1-flash | high, max, max |
 | `swarm_workers` | `deepseek/deepseek-v4.1-flash` | high |
+
+Why these and not a premium reasoning model: `subagent` calls run an agent loop, so input volume dominates and a $2/$6 route costs roughly ten times a $0.15/$0.5 one. `z-ai/glm-5.3-flash` carries the highest measured intelligence of the cheap tier (57.5) and a different training lineage from MiMo and DeepSeek, which is the property the arena and the adversarial reviewers actually need. Diversity comes from the family, not the price tag.
+
+Deliberately avoided: `xai/grok-4.7` at $2/$6 for no measured intelligence gain, and the `*-contributor` routes. Those are 95% cheaper but trade data contribution for the discount, which is the wrong deal for work that touches private repos.
 
 To override a role without editing the repo, write `~/.dsh/pstack-models.yml` with the same shape and only the roles you want to change. It wins over this file.
 
