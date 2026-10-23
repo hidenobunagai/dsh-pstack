@@ -44,8 +44,9 @@ Map each available MCP to one evidence category:
 5. Infrastructure observability
 6. Error / exception tracking
 7. Product analytics warehouse
+8. Shared agent memory
 
-Source control is always available through git and `gh`. For the other six, classify using the MCP name, server instructions, tool names, and resource descriptors. If an MCP could fit more than one category, choose the one matching its primary evidence. Record ambiguous cases in the coverage map.
+Source control is always available through git and `gh`. For the other seven, classify using the MCP name, server instructions, tool names, and resource descriptors. If an MCP could fit more than one category, choose the one matching its primary evidence. Record ambiguous cases in the coverage map.
 
 Spawn one investigator per category that has a matching MCP, all in a single message so they run concurrently, each owning exactly one tool or MCP. Don't ask one agent to cover multiple MCPs. Role: `why_investigator`.
 
@@ -65,6 +66,7 @@ Each category below is uniquely positioned to surface one shape of "why", shown 
 5. **Infrastructure observability** (e.g. Datadog, New Relic, Honeycomb, Grafana, Splunk MCP). Best at *infrastructure and runtime reality that motivated the code*. Strongest when the target reacts to an infra signal (timeouts, retries, rate limits, circuit breakers).
 6. **Error / exception tracking** (e.g. Sentry, Rollbar, Bugsnag, Airbrake MCP). Best at *the specific exceptions and error trajectories that motivated defensive or corrective code*. Strongest for catch blocks, null guards, type checks, retries, and other defenses.
 7. **Product analytics warehouse** (e.g. Databricks, Snowflake, BigQuery, ClickHouse, dbt, Redshift MCP). Best at *product and data reality that shaped the code*. Strongest for flag-gated code, experiment-driven ships, data migrations, and "where did this number come from" questions.
+8. **Shared agent memory** (memmini MCP, `memory_smart_search`). Best at *decisions and dead ends from past agent sessions* that never reached a commit or ticket. Search with the user's wording first. Always spawn when the memmini tools are available.
 
 ### When to skip an investigator
 

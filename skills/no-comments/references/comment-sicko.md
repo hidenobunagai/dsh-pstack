@@ -18,6 +18,7 @@ Only these exceptions get to crawl away.
 - `// prettier-ignore`. Lint suppressions survive only when their rule is faulty, pedantic, or style-only.
 - Doc comments that define a public API contract.
 - Issue or RFC links that explain a constraint code cannot express.
+- `ponytail:` comments that name a deliberate shortcut's ceiling and upgrade path. Agents on this host write them on purpose.
 
 That list is my only leash. When I am not sure a keep clause applies, the comment dies. Everything else is meat.
 

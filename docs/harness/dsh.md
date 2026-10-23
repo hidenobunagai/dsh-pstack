@@ -84,3 +84,24 @@ Never run a git write command. Read-only `git` and `gh` are fine, and `gh` stays
 | `disable-model-invocation: true` | keep it for the `principle-*` skills. It keeps them out of the model catalog so every request does not pay for 21 descriptions, and the model reads the leaf file directly. The user-facing task skills drop it, so the model can also route to them on its own. |
 | relative reference to a sibling skill | an absolute path, because a subagent's working directory may differ |
 | `references/*.md` | the same relative path from the skill folder |
+| `.cursor/skills/<name>/` (a generated project skill) | `~/.dsh/skills/<name>/`. DSH discovers skills only there, one level deep, or in a `customSkillDirs` entry. |
+| `/setup-pstack`, the `pstack-models.mdc` rule | `config/models.yml` and `~/.dsh/pstack-models.yml`. See Model roles. |
+
+## Transcripts and memory
+
+| Cursor | DSH |
+|---|---|
+| Transcripts in `~/.cursor/projects/<slug>/agent-transcripts/` | `~/.dsh/sessions/<slug>/<session-id>/session.v4.jsonl.zstd`. The slug is the workspace path with `/` turned into `-` and wrapped in `-`, so `/home/pi` is `--home-pi--`. List `~/.dsh/sessions/` to confirm. The files are zstd-compressed JSONL: read them with `zstdcat <file>`, never with `read`. Read only this workspace's folder. |
+| Past sessions and decisions (`recall`, `why`, session pickup) | Search the shared memmini memory first with `memory_smart_search`, using the user's wording, then read transcripts for what it misses. memmini is a lead, not a citation: check a hit against the code or the history before you rely on it. |
+
+## Local equivalents
+
+| Cursor | DSH |
+|---|---|
+| Bugbot or an agentic review pass | The `interrogate` skill. |
+| Cursor cloud agent, its own machine | No equivalent. Every child runs on this host. Skip a step that needs one, and say so. |
+| `/create-skill` | Write `~/.dsh/skills/<name>/SKILL.md` directly, then run `node <pstack>/scripts/check-skills.mjs` when the skill lives in this repo. |
+
+## Comments
+
+Code on this host is also written by agents running the ponytail working style, which marks a deliberate shortcut with a `ponytail:` comment that names its ceiling and upgrade path. Those comments are load-bearing. Every comment pass, including `no-comments`, keeps them.

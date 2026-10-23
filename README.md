@@ -2,7 +2,7 @@
 
 A port of [pstack](https://github.com/cursor/plugins/tree/main/pstack) to DeepSeek Harness, tuned for this host. Ported against 0.15.30.
 
-pstack is Lauren Tan's (poteto) set of agent workflows: a strict working style, a set of playbooks for the four kinds of engineering work, and 34 skills that encode principles about design, verification, and delegation. The upstream targets Cursor and ships a Claude Code adapter. This repo does the same job for DSH.
+pstack is Lauren Tan's (poteto) set of agent workflows: a strict working style, a set of playbooks for the four kinds of engineering work, and 49 skills that encode principles about design, verification, and delegation. The upstream targets Cursor and ships a Claude Code adapter. This repo does the same job for DSH.
 
 ## What changes from upstream
 
@@ -15,6 +15,10 @@ The skills keep their behavior. These parts change:
 - **Commands.** `/deslop` and `/no-comments` fold into skill passes. `/loop 1h` becomes `schedule_create`.
 
 The full mapping, including every table, is in [`docs/harness/dsh.md`](docs/harness/dsh.md). Read that once per session before following a playbook.
+
+Left out on purpose: `make-bot-ui` and `automate-me` (Cursor-only), `setup-pstack` (DSH reads `config/models.yml`), `statechart` and the formal verification skills (they need Java and TLA+), `typescript-best-practices` (the host has its own TypeScript standards), and `bro`.
+
+Like the Claude Code fork, this port keeps `ponytail:` comments through every comment pass and searches the shared memmini memory first in `why` and `recall`.
 
 ## Install
 
@@ -48,9 +52,9 @@ The supporting skills are user-invocable in their own right: `how`, `why`, `arch
 
 ## Catalog visibility
 
-The 21 `principle-*` skills keep `disable-model-invocation: true`, as upstream has them. They stay out of the model's skill catalog so every request does not pay for 21 descriptions, and the model reads the leaf file when a trigger names one.
+The 24 `principle-*` skills keep `disable-model-invocation: true`, as upstream has them. They stay out of the model's skill catalog so every request does not pay for 24 descriptions, and the model reads the leaf file when a trigger names one.
 
-The 13 task skills (poteto-mode, the six routines, and the writing and review passes) drop that flag, so the model can also route to them on its own when a task matches. Upstream relies on the user typing the command. On this host the model finding `bug-fix` by itself is worth 13 catalog entries.
+The 25 task skills (poteto-mode, the routines such as how, why, recall, teach, tdd, and figure-it-out, and the writing and review passes) drop that flag, so the model can also route to them on its own when a task matches. Upstream relies on the user typing the command. On this host the model finding `bug-fix` by itself is worth 25 catalog entries.
 
 ## Model roles
 
@@ -111,7 +115,7 @@ A sync does not rewrite the port. It tells you what moved, and you decide which 
 ## Layout
 
 ```
-skills/                    34 skills, one directory each, each with SKILL.md
+skills/                    49 skills, one directory each, each with SKILL.md
   poteto-mode/             the working style
     playbooks/             one per kind of task
     scripts/check-plan.mjs validates a multi-phase plan
