@@ -51,6 +51,7 @@ Type `/poteto-mode` or say "poteto" to enter the working style. From there the p
 | New behavior | `skills/poteto-mode/playbooks/feature.md` |
 | Behavior-preserving restructure | `skills/poteto-mode/playbooks/refactoring.md` |
 | Work spanning phases or PRs | `skills/poteto-mode/playbooks/multi-phase-plan.md` |
+| Pruning jj workspaces to free disk | `skills/poteto-mode/playbooks/worktree-cleanup.md` (tests: `bun test skills/poteto-mode/scripts/worktree-audit.test.ts`) |
 | Any of the above, at the end | `skills/poteto-mode/playbooks/opening-a-pr.md` |
 
 The supporting skills are user-invocable in their own right: `how`, `why`, `architect`, `arena`, `swarm`, `interrogate`, `reflect`, `unslop`, `no-comments`, `technical-writing`, `show-me-your-work`, `benchmark-checklist`.
