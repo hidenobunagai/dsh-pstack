@@ -11,6 +11,7 @@ The skills keep their behavior. These parts change:
 - **Delegation.** Cursor's `Task` tool becomes DSH's `subagent`. There is no `subagent_type`, so a role is the brief you write, and a role's model is the `provider` / `model` / `reasoning_effort` arguments on the call.
 - **Models.** Cursor reads role models from `~/.cursor/rules/pstack-models.mdc`. This port reads `config/models.yml`, with a per-user override at `~/.dsh/pstack-models.yml`.
 - **Version control.** Every repo here is a colocated jj repo, so `git worktree` becomes `jj workspace add`, and stacking uses `jj rebase` / `jj squash`.
+- **Always-on poteto-mode.** A SessionStart hook (`hooks/poteto-always.sh`) injects `skills/poteto-mode/SKILL.md` into every session, the way Cursor pins a custom mode. Say "poteto-mode off" to drop it for a session. `PSTACK_POTETO=off` in the environment skips it, which the headless jobs set.
 - **Verification surfaces.** `control-ui` and `control-cli` from `cursor-team-kit` become `web-verify` for web UIs and a direct run of the real binary for CLIs.
 - **Commands.** `/deslop` and `/no-comments` fold into skill passes. `/loop 1h` becomes `schedule_create`.
 
@@ -26,6 +27,8 @@ Like the Claude Code fork, this port keeps `ponytail:` comments through every co
 scripts/link-skills.sh          # symlink skills/ into ~/.dsh/skills
 scripts/link-skills.sh --unlink # remove the links
 ```
+
+The always-on hook needs a second `@deepseek-ai/dsh-hooks-claude-code` row (id `hooks-pstack`) in `~/.dsh/cordis.patch.yml` with `configPath` set to this repo's `hooks/hooks.json`.
 
 DSH discovers `~/.dsh/skills/<name>/SKILL.md`. The links point at this repo, so an edit here lands in the catalog without reinstalling. A running web host may need a reload to pick up a new skill name.
 
