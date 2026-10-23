@@ -2,6 +2,8 @@
 
 A port of [pstack](https://github.com/cursor/plugins/tree/main/pstack) to DeepSeek Harness, tuned for this host. Ported against 0.15.30.
 
+This is an unofficial personal fork. It is not affiliated with or endorsed by the author or Cursor. Provided as-is, with no support. Issues and pull requests may go unanswered. Fork it and make it yours.
+
 pstack is Lauren Tan's (poteto) set of agent workflows: a strict working style, a set of playbooks for the four kinds of engineering work, and 49 skills that encode principles about design, verification, and delegation. The upstream targets Cursor and ships a Claude Code adapter. This repo does the same job for DSH.
 
 ## What changes from upstream
