@@ -1,6 +1,6 @@
 ### Feature
 
-**You own the design. Plan, review, verify.** Delegate implementation. Stay in the lead.
+**You own the design and the build. Plan, build, verify.** Delegate only per **When to delegate code-writing** in the Subagents section.
 
 1. `how` over the affected subsystem.
 2. `architect` for parallel design exploration.
@@ -9,7 +9,7 @@
    - **Independent workstreams.** Disjoint files, services, or layers parallelize. Shared writes serialize.
    - **Shared mutable state.** Default to splitting the target (the **separate-before-serializing-shared-state** principle skill). Serialize only for real invariants.
    - **Smallest safe decomposition.** If one worker is best, name why.
-4. Delegate code-writing to a `subagent` with the configured feature model (`code` in `config/models.yml`, default `deepseek/deepseek-v4.1-flash`) and a specific scope (file paths, named data shape and its organizing structure per **principle-model-the-domain**, a state machine over scattered booleans, a table/registry over branching, a typed model over repeated shape assumptions, chosen before the delegate writes logic, and success criteria). Pick the reasoning effort for the job. When the implementation admits multiple valid shapes (error handling, abstraction layer, test structure), explore the alternatives before delegating so the delegate implements a decided shape rather than inventing one. Mandatory: no skip-with-reason escape. A subagent forbidden to spawn further children satisfies this by owning the diff directly with the same review separation. Comments per **Comments**. Surgical edits, re-ground against the source for upstream-derived files. Port shared-primitive improvements to all consumers and verify each. `jj commit` liberally.
+4. Write the code yourself with a specific scope (file paths, named data shape and its organizing structure per **principle-model-the-domain**, a state machine over scattered booleans, a table/registry over branching, a typed model over repeated shape assumptions, chosen before any logic is written, and success criteria). When a delegation condition holds, hand the scope to a `subagent` with the configured feature model (`code` in `config/models.yml`) and review its diff. When the implementation admits multiple valid shapes (error handling, abstraction layer, test structure), explore the alternatives first so the code implements a decided shape rather than an invented one. Comments per **Comments**. Surgical edits, re-ground against the source for upstream-derived files. Port shared-primitive improvements to all consumers and verify each. `jj commit` liberally.
 5. Verify on the matching surface. "Inconclusive" or wrong-surface is not a pass. Flag it.
 6. Rebase into small, ordered commits. Stack follow-ups.
    Use the **sequence-verifiable-units** principle skill, building, verifying, and committing each small unit before the next.
