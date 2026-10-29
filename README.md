@@ -19,7 +19,7 @@ The skills keep their behavior. These parts change:
 
 The full mapping, including every table, is in [`docs/harness/dsh.md`](docs/harness/dsh.md). Read that once per session before following a playbook.
 
-Left out on purpose: `make-bot-ui` and `automate-me` (Cursor-only), `setup-pstack` (DSH reads `config/models.yml`), `statechart` and the formal verification skills (they need Java and TLA+), `typescript-best-practices` (the host has its own TypeScript standards), and `bro`.
+Left out on purpose: `make-bot-ui` and `automate-me` (Cursor-only), `setup-pstack` (DSH reads `config/models.yml`), `typescript-best-practices` (the host has its own TypeScript standards), and `bro`. `statechart` and the two formal verification skills were ported on 2026-10-30 from upstream v0.15.36; their first run installs Java and TLC via mise (or needs `TLA2TOOLS` and `JAVA` set).
 
 Like the Claude Code fork, this port keeps `ponytail:` comments through every comment pass and searches the shared memmini memory first in `why` and `recall`.
 
