@@ -23,7 +23,7 @@ Cursor reads role models from a `pstack-models.mdc` rule. DSH reads them from `c
 
 A role entry is `provider/model` plus an optional `effort`. Pass them to `subagent` as `provider`, `model`, and `reasoning_effort`. Call `list_subagent_models` when you need the exact routes and efforts this host advertises rather than guessing.
 
-Families in the upstream fallback rules map by prefix: a `claude-*` entry needs a Claude route on a registered provider, a `grok-*` entry needs an `xai/*` route, and so on. When a requested route is rejected, use the role's default and say so in the reply.
+Families in the upstream fallback rules map by prefix: a `claude-*` entry needs a Claude route on a registered provider, a `grok-*` entry needs an `xai/*` route, and so on. When a requested route is rejected, implementation work moves down the ladder in `config/models.yml`; other work uses the role's default. Say so in the reply either way.
 
 The user's subagent settings page governs which routes a child may select at all. A route outside that allowlist fails no matter what the role file says.
 
@@ -33,9 +33,11 @@ The user's subagent settings page governs which routes a child may select at all
 
 | Model | Efforts |
 |---|---|
+| `minimax/minimax-m3.1-flash` | low, medium, high, xhigh, max |
 | `deepseek/deepseek-v4.1-flash` | low, high, max |
 | `z-ai/glm-5.3-flash` | low, high, max |
 | `xiaomi/mimo-v2.6-pro` | low, medium, high |
+| `xiaomi/mimo-v2.6-flash` | low, medium, high |
 
 The parent turn's effort is owned by the `dsh-jev` router, which judges each user prompt and applies a per-model lift. The parent's model is `xiaomi/mimo-v2.6-pro`, fixed by the session configuration; the router never switches it. For this model every judgment from `medium` up lands on `high`, its ceiling, and `low` lands on `medium`. A skill should not fight it. Child effort is set by the role table instead, and the router does not decide that.
 

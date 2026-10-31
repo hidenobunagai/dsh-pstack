@@ -22,15 +22,29 @@
 #
 # Verify a route before relying on it. Call `list_subagent_models` with no arguments to list
 # providers, then with a provider id to list its models and their efforts.
+#
+# Seat assignment (the fleet-wide split, same as the unified orchestration design): the parent
+# session is the head and runs xiaomi/mimo-v2.6-pro, so the judgment and review roles below stay
+# on that model at high, its ceiling. Implementation delegates take the ladder documented above
+# the `code` role.
 
 roles:
-  # Implementation. Raise effort for the hardest changes, lower it for mechanical edits.
+  # Implementation ladder, in the order seats are taken. This is an availability order, not a
+  # difficulty ranking: take the first seat that is open, and when a spawn is rejected or a pool
+  # is exhausted, move down the ladder and say so in the reply.
+  #   1. minimax/minimax-m3.1-flash   max
+  #   2. z-ai/glm-5.3-flash           max
+  #   3. deepseek/deepseek-v4.1-flash max
+  #   4. xiaomi/mimo-v2.6-flash       high
+  # The `code` role is seat 1. The volume roles further down (explorer, swarm_workers,
+  # why_investigator) sit on seat 3 at high on purpose: they trade depth for volume and are not
+  # the ladder's default. Judgment calls stay off the ladder entirely, on the judgment role.
   code:
     provider: commandcode-goat
-    model: deepseek/deepseek-v4.1-flash
+    model: minimax/minimax-m3.1-flash
     effort: max
-    why: Cheap and strong enough for the bulk of implementation work. Max effort because the
-      delegate owns a whole diff and the cost of a wrong shape exceeds the token saving.
+    why: First seat on the implementation ladder. Max effort because the delegate owns a whole
+      diff and the cost of a wrong shape exceeds the token saving.
 
   # Prose, PR bodies, and any writing the operator reads.
   prose:
