@@ -98,7 +98,7 @@ On this host, every subagent is the `subagent` tool. There is no `subagent_type`
 
 **Effort has a ceiling per model.** A request above what the model accepts is clamped down, not rejected, so check the route's supported efforts before choosing. `deepseek/deepseek-v4.1-flash` and `z-ai/glm-5.3-flash` take `low` / `high` / `max`, while `xiaomi/mimo-v2.6-pro` stops at `high`. Two seats compared at different depths give you a comparison of budgets rather than of work, so hold the shallower seat's ceiling as the common depth when the whole panel is the point.
 
-**The parent's own effort is not yours to set here.** The Jev router judges each user turn and lifts it, with `deepseek/deepseek-v4.1-flash` mapping anything from `medium` up to `max`. Leave that alone. Do not re-state an effort on the parent, and do not treat a lowered parent effort as a reason to lower the children.
+**The parent's own effort is not yours to set here.** The Jev router judges each user turn and lifts it. The parent's model is `xiaomi/mimo-v2.6-pro`, fixed by the session configuration; the router never switches it. For this model a `low` judgment runs at `medium`, `medium` runs at `high`, and anything above clamps to `high`, its ceiling. Leave that alone. Do not re-state an effort on the parent, and do not treat a lowered parent effort as a reason to lower the children.
 
 List every spawn you plan before you start them, and issue them in one message so they run concurrently.
 
@@ -122,7 +122,7 @@ Every playbook ends with a reply written this way, PR link as `https://github.co
 
 ## Comments
 
-Comments follow the same rule as the reply. Write them clean as you go. Keep a comment only for a non-obvious *why* the code can't show. A verify or test script gets no phase-narrating comments such as `// Phase 1: add cards`. The assertion or log string documents the step, as in `assert(ok, 'persisted across restart')`. This applies to every file you produce, including the delegate's diff.
+Comments follow the same rule as the reply. Write them clean as you go. Keep a comment only for a non-obvious _why_ the code can't show. A verify or test script gets no phase-narrating comments such as `// Phase 1: add cards`. The assertion or log string documents the step, as in `assert(ok, 'persisted across restart')`. This applies to every file you produce, including the delegate's diff.
 
 ## Version control
 
