@@ -37,8 +37,8 @@ roles:
   #   3. deepseek/deepseek-v4.1-flash max
   #   4. xiaomi/mimo-v2.6-flash       high
   # The `code` role is seat 1. The volume roles further down (explorer, swarm_workers,
-  # why_investigator) sit on seat 3 at high on purpose: they trade depth for volume and are not
-  # the ladder's default. Judgment calls stay off the ladder entirely, on the judgment role.
+  # why_investigator) also sit on seat 1, at high: same ladder, with the effort tuned down for
+  # volume. Judgment calls stay off the ladder entirely, on the judgment role.
   code:
     provider: commandcode-goat
     model: minimax/minimax-m3.1-flash
@@ -65,7 +65,7 @@ roles:
   # Codebase exploration for the how skill. Volume matters more than depth.
   explorer:
     provider: commandcode-goat
-    model: deepseek/deepseek-v4.1-flash
+    model: minimax/minimax-m3.1-flash
     effort: high
 
   # The explainer that turns explorer findings into an architectural write-up.
@@ -101,7 +101,7 @@ roles:
   # Swarm workers: many parallel lanes, narrow scope each.
   swarm_workers:
     provider: commandcode-goat
-    model: deepseek/deepseek-v4.1-flash
+    model: minimax/minimax-m3.1-flash
     effort: high
 
   # Adversarial reviewers, one seat per model. Diversity is the point, and price per seat barely
@@ -146,7 +146,7 @@ roles:
   # Historical research for the why skill.
   why_investigator:
     provider: commandcode-goat
-    model: deepseek/deepseek-v4.1-flash
+    model: minimax/minimax-m3.1-flash
     effort: high
 
   why_synthesizer:
