@@ -39,7 +39,7 @@ The user's subagent settings page governs which routes a child may select at all
 | `xiaomi/mimo-v2.6-pro` | low, medium, high |
 | `xiaomi/mimo-v2.6-flash` | low, medium, high |
 
-The parent turn's effort is owned by the `dsh-jev` router, which judges each user prompt and applies a per-model lift. The parent's model is `xiaomi/mimo-v2.6-pro`, fixed by the session configuration; the router never switches it. For this model every judgment from `medium` up lands on `high`, its ceiling, and `low` lands on `medium`. A skill should not fight it. Child effort is set by the role table instead, and the router does not decide that.
+The parent's model is `xiaomi/mimo-v2.6-pro`, fixed by the session configuration, and the parent turn's effort is the session's configured effort. A per-turn effort router (`dsh-jev`, which judged each user prompt and lifted the effort per model) was retired on 2026-11-01: the role table already fixes each seat's model and effort, so the parent runs the configured model directly. Child effort is set by the role table.
 
 ## Control skills
 
