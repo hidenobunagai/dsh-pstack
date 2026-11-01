@@ -1,5 +1,1 @@
-{
-  "hooks": {
-    "SessionStart": [{ "hooks": [{ "type": "command", "command": "sh \"$HOME/projects/dsh-pstack/hooks/poteto-always.sh\"", "timeout": 5 }] }]
-  }
-}
+{ "hooks": {} }
