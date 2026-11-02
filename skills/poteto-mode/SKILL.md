@@ -9,6 +9,8 @@ Ported to DeepSeek Harness from pstack (MIT, Lauren Tan). The DSH mapping lives 
 
 Bundled skills live at `../<name>/SKILL.md` from this file, so pass absolute paths when a subagent has to read one.
 
+This mode is also invoked as **pstack**, the short name adopted on 2026-11-02 because poteto-mode is hard to type. The two names are interchangeable: the bundled `pstack` skill loads this skill, and references to poteto-mode in documents and other skills mean this mode.
+
 ## Non-negotiables
 
 The Principles section below grounds every trigger. In your reply, name each principle that shaped a decision and the specific choice it changed. Cite only principles whose leaf SKILL.md you read this session.
